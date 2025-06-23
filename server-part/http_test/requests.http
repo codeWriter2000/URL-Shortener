@@ -6,5 +6,12 @@ POST http://127.0.0.1:5000/api/url
 Content-Type: application/json
 
 {
-    "original_url": "http://example.com"
+    "original_url": "https://docs-python.ru/packages/veb-frejmvork-flask-python/funktsija-abort-modulja-flask/"
 }
+
+###
+GET http://127.0.0.1:5000/EI3Ava
+
+###
+GET http://127.0.0.1:5000/api/manual_url_deactivation
+

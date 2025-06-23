@@ -11,14 +11,12 @@ class DB_HELPER:
     """
 
     def __init__(self, data_base: str = db_name):
-        """
-        Инициализация подключения к БД, проверка на ее существование и создание в случае отсутствия
-
-        Args:
-            data_base (str, optional): наименование файла *.db, используемого в качестве БД проекта (default = db_name).
-        """
         self.data_base = data_base  # название базы присваиваем атрибуту data_base класса DB_HELPER
 
+    def db_create(self):
+        """
+        Создание БД в случае ее отсутствия
+        """
         with sqlite3.connect(self.data_base) as conn:
             cursor = conn.cursor()  # инициируем курсор для взаимодействия с базой данных
 

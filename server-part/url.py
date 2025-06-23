@@ -5,9 +5,14 @@ from datetime import datetime
 from db_helper import DB_HELPER
 
 
-url_error_tpl = 'URL Class error:\n\tmethod - {}\n\tdescription: {}'  # шаблон строки ошибки
+url_error_tpl = 'URL Class error:\n\tmethod -> {}\n\tdescription -> {}'  # шаблон строки ошибки
 token_length = 6  # длина генерируемого токена
 char_alphabet = list(string.digits + string.ascii_letters)  # алфавит символов для генерации токенов (цифры + заглавные и строчные ASCII символы)
+
+
+db = DB_HELPER()
+
+db.db_create()
 
 
 class URL:
@@ -60,7 +65,6 @@ class URL:
             query = query_file.read()
 
         try:
-            db = DB_HELPER()
             db.execute_non_query(query, params=(original_url, new_token, dt_created))
         except Exception as e:
             print(url_error_tpl.format('generate_new', e))
@@ -68,4 +72,50 @@ class URL:
         res = URL(id=None, original_url=original_url, short_token=new_token, created=dt_created, active=1)
 
         return res
+
+    @staticmethod
+    def get_original_by_token(short_token: str) -> str:
+        """
+        Метод для получения оригинальной ссылки из БД проекта
+
+        Args:
+            short_token (str): уникальный короткий токен, присвоенный данной ссылке и хранимый в БД
+
+        Returns:
+            str: оригинальная ссылка на ресурс
+        """
+        original_url = ''  # строка URL оригинального ресурса (по умолчанию пустая)
         
+        with open('./queries/get_original_url.sql', 'r', encoding='utf-8') as query_file:
+            query = query_file.read()
+
+        try:
+            res = db.execute_query(query, params=(short_token,))
+        except Exception as e:
+            print(url_error_tpl.format('get_original_by_token', e))
+
+        if res:
+            original_url = res[0][0]
+
+        return original_url
+
+    @staticmethod
+    def weekly_deactivate() -> bool:
+        """
+        Метод для деактивации коротких токенов по истечении срока
+
+        Returns:
+            bool: статус выполнения запроса
+        """
+        flag = False
+
+        with open('./queries/periodic_deactivate.sql', 'r', encoding='utf-8') as query_file:
+            query = query_file.read()
+
+        try:
+            db.execute_non_query(query, params=())
+            flag = True
+        except Exception as e:
+            print(url_error_tpl.format('weekly_deactivate', e))
+
+        return flag
