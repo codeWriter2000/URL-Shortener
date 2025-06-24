@@ -15,3 +15,6 @@ GET http://127.0.0.1:5000/EI3Ava
 ###
 GET http://127.0.0.1:5000/api/manual_url_deactivation
 
+###
+GET http://127.0.0.1:5000/api/nearest/5
+

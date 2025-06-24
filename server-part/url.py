@@ -7,6 +7,7 @@ from db_helper import DB_HELPER
 
 url_error_tpl = 'URL Class error:\n\tmethod -> {}\n\tdescription -> {}'  # шаблон строки ошибки
 token_length = 6  # длина генерируемого токена
+approved_url_cnt = [5, 10, 15, 30]  # число доступных для одновременного вывода ссылок
 char_alphabet = list(string.digits + string.ascii_letters)  # алфавит символов для генерации токенов (цифры + заглавные и строчные ASCII символы)
 
 
@@ -119,3 +120,36 @@ class URL:
             print(url_error_tpl.format('weekly_deactivate', e))
 
         return flag
+
+    @staticmethod
+    def get_nearest_urls(count: int) -> json:
+        """
+        Метод для получения определенного пользователем количества недавно добавленных URL
+
+        Args:
+            count (int): количество URL, которое необходимо вывести
+
+        Returns:
+            json: результат выводится в виде json строки
+        """
+        out_data = []
+
+        if count in approved_url_cnt:
+
+            with open('./queries/get_top_of_nearest_urls.sql', 'r', encoding='utf-8') as query_file:
+                query = query_file.read()
+
+            try:
+                res = db.execute_query(query, params=(count,))
+            except Exception as e:
+                print(url_error_tpl.format('get_nearest_urls', e))
+
+        if res:
+            for r in res:
+                url_str, created = r
+                out_data.append({
+                    'original_url': url_str,
+                    'created': created,
+                })
+
+        return json.dumps(out_data)
