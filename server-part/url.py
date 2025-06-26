@@ -125,7 +125,7 @@ class URL:
         return flag
 
     @staticmethod
-    def get_nearest_urls(count: int) -> json:
+    def get_nearest_urls(count: int) -> list:
         """
         Метод для получения определенного пользователем количества недавно добавленных URL
 
@@ -133,7 +133,7 @@ class URL:
             count (int): количество URL, которое необходимо вывести
 
         Returns:
-            json: результат выводится в виде json строки
+            list: результат выводится в виде списка словарей
         """
         out_data = []
 
@@ -155,7 +155,7 @@ class URL:
                     'created': created,
                 })
 
-        return json.dumps(out_data)
+        return out_data
 
     @staticmethod
     def log_url_data(url_str: str) -> None:

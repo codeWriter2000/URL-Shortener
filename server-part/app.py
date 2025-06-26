@@ -23,7 +23,7 @@ def ping_pong():
 def url_deactivate():
     res = URL.weekly_deactivate()
     if not res:
-        abort(505)  # Internal server error
+        abort(500)  # Internal server error
     return jsonify(res)
 
 
@@ -41,12 +41,7 @@ def create_short_url():
     data_2_res = url_obj.url_2_dict()
     data_2_res['qrcode'] = qr_b64
 
-    res = json.dumps(data_2_res)
-
-    response = make_response(jsonify(res), 200)
-    response.headers['Content-Type'] = 'application/json'
-
-    return response
+    return jsonify(data_2_res)
 
 
 @app.route('/<string:token>', methods=['GET'])

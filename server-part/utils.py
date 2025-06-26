@@ -38,7 +38,7 @@ def get_origin(url: str) -> str:
     """
     ex_str = ''
 
-    match = re.match(origin_pattern, url)
+    match = origin_pattern.match(url)
     if match:
         ex_str = match.group(1)
 
