@@ -26,6 +26,19 @@ class DB_HELPER:
             cursor.execute(query)  # выполняем запрос
             conn.commit()
 
+    def log_create(self):
+        """
+        Создание таблицы для логов
+        """
+        with sqlite3.connect(self.data_base) as conn:
+            cursor = conn.cursor()  # инициируем курсор для взаимодействия с базой данных
+
+            with open('./queries/generate_logs.sql', 'r', encoding='utf-8') as query_file:
+                query = query_file.read()  # читаем запрос SQL из файла
+
+            cursor.execute(query)  # выполняем запрос
+            conn.commit()
+
     def execute_non_query(self, query: str, params=()):
         """
         Метод для выполнения SQL запроса без возвращения результатов запроса

@@ -1,6 +1,10 @@
 import qrcode as qr
 import base64
+import re
 from io import BytesIO
+
+
+origin_pattern = re.compile(r'^(?:https?://)?([^/]+)', re.IGNORECASE)
 
 
 def get_qr_bs64(data: str) -> str:
@@ -21,3 +25,23 @@ def get_qr_bs64(data: str) -> str:
     qr_b64 = base64.b64encode(qr_bytes)
     
     return qr_b64.decode('utf-8')
+
+def get_origin(url: str) -> str:
+    """
+    Получение ресурса с помощью регулярных выражений
+
+    Args:
+        url (str): строка ссылки на ресурс
+
+    Returns:
+        str: имя ресурса
+    """
+    ex_str = ''
+
+    match = re.match(origin_pattern, url)
+    if match:
+        ex_str = match.group(1)
+
+    return ex_str
+    
+    

@@ -2,6 +2,7 @@ import string
 import json
 from random import sample
 from datetime import datetime
+from utils import get_origin
 from db_helper import DB_HELPER
 
 
@@ -13,7 +14,9 @@ char_alphabet = list(string.digits + string.ascii_letters)  # алфавит с�
 
 db = DB_HELPER()
 
-db.db_create()
+db.db_create()  # создали основную таблицу
+
+db.log_create()  # создали таблицу для логирования
 
 
 class URL:
@@ -32,12 +35,12 @@ class URL:
         # Более информативное представление для отладки
         return f"<URL id={self.id}, original_url={self.original_url}, short_token='{self.short_token}', created={self.created}, active={self.active}>"
     
-    def url_2_json(self) -> str:
+    def url_2_dict(self) -> dict:
         """
         Преобразование объекта URL в JSON
 
         Returns:
-            json: объект в формате json
+            dict: объект в формате словаря
         """
         ex_data = {
             'id': self.id,
@@ -46,7 +49,7 @@ class URL:
             'created': self.created,
             'active': self.active,
         }
-        return json.dumps(ex_data)
+        return ex_data
 
     @staticmethod
     def generate_new(original_url: str) -> 'URL':
@@ -153,3 +156,69 @@ class URL:
                 })
 
         return json.dumps(out_data)
+
+    @staticmethod
+    def log_url_data(url_str: str) -> None:
+        d_time = datetime.now().isoformat()  # дата и время посещения
+        
+        with open('./queries/log_url.sql', 'r', encoding='utf-8') as query_file:
+            query = query_file.read()
+
+        try:
+            db.execute_non_query(query, params=(url_str, d_time))
+        except Exception as e:
+            print(url_error_tpl.format('log_url_data', e))
+
+    @staticmethod
+    def distinct_origins() -> dict:
+        """
+        Получение всех ссылок из базы для подсчета уникальных интернет ресурсов
+
+        Returns:
+            dict: возвращает словарь словарей ключ - ресурс, значение - число сформированных токенов на этот ресурс
+        """
+        ex_data = {}
+
+        with open('./queries/get_all_urls.sql', 'r', encoding='utf-8') as query_file:
+            query = query_file.read()
+
+        try:
+            res = db.execute_query(query, params=())
+        except Exception as e:
+            print(url_error_tpl.format('distinct_origins', e))
+
+        if res:
+            work_with = list(map(lambda x: x[0], res))
+            work_with = list(map(get_origin, work_with))
+
+            for _ in work_with:
+                ex_data[_] = 1 if _ not in ex_data.keys() else (ex_data[_] + 1)
+
+        return ex_data
+
+    @staticmethod
+    def origin_statistic_by_logs() -> dict:
+        """
+        Получение всех ссылок из таблицы с логами для подсчета  посещения уникальных интернет ресурсов
+
+        Returns:
+            dict: возвращает словарь словарей ключ - ресурс, значение - число сформированных токенов на этот ресурс
+        """
+        ex_data = {}
+
+        with open('./queries/get_origins_from_logs.sql', 'r', encoding='utf-8') as query_file:
+            query = query_file.read()
+
+        try:
+            res = db.execute_query(query, params=())
+        except Exception as e:
+            print(url_error_tpl.format('origin_statistic_by_logs', e))
+
+        if res:
+            work_with = list(map(lambda x: x[0], res))
+            work_with = list(map(get_origin, work_with))
+
+            for _ in work_with:
+                ex_data[_] = 1 if _ not in ex_data.keys() else (ex_data[_] + 1)
+
+        return ex_data

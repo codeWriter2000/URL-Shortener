@@ -1,0 +1,4 @@
+CREATE TABLE IF NOT EXISTS url_logs (
+    visited_url TEXT NOT NULL,
+    visit_time TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
