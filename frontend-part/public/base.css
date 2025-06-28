@@ -1,0 +1,22 @@
+html, body {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background:
+        linear-gradient(217deg, #dad7cd, rgba(255, 0, 0, 0) 70.71%),
+        linear-gradient(127deg, #a3b18a, rgba(0, 255, 0, 0) 70.71%),
+        linear-gradient(336deg, #588157, rgba(0, 0, 255, 0) 70.71%);
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
+#app {
+    color: #2f3e46;
+}
+
+.target-txt {
+    color: #52796f;
+}
+
