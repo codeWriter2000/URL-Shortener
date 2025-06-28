@@ -1,9 +1,17 @@
+# Python
 __pycache__/
 *.py[cod]
+*.sqlite3
+*.db
+
+# Virtual environments
 .venv/
-dist/
-*.egg-info/
-.coverage
-*.py,cover
-.cache/
-*.py,cover
+env/
+venv/
+
+# IDEs
+.idea/
+.vscode/
+
+# System
+.DS_Store
