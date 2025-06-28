@@ -1,27 +1,3 @@
-# Python
-__pycache__/
-*.py[cod]
-*.sqlite3
-*.db
-
-# Virtual environments
-.venv/
-env/
-venv/
-
-# IDEs
-.idea/
-.vscode/
-
-# System
-.DS_Store
-
-# IDE settings
-.idea/
-*.iml
-*.xml
-.vscode/
-
 .DS_Store
 node_modules
 /dist
