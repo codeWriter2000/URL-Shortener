@@ -1,0 +1,1 @@
+SELECT visited_url FROM url_logs;

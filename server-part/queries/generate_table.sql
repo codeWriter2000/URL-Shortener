@@ -1,0 +1,7 @@
+CREATE TABLE IF NOT EXISTS url_storage (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    original_url TEXT NOT NULL,
+    short_token TEXT NOT NULL UNIQUE CHECK(length(short_token) = 6),
+    created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    is_active INTEGER NOT NULL DEFAULT 1
+);
