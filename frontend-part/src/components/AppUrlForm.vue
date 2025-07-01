@@ -21,13 +21,24 @@
       </button>
     </div>
   </form>
+  <AppModal ref="modal">
+    <template #modal-content>
+      <AppUrlInfo :url-obj="responseData" />
+    </template>
+  </AppModal>
 </template>
 
 <script>
 import { API } from "@/../app-config";
+import AppModal from "@/components/AppModal.vue";
+import AppUrlInfo from "@/components/AppUrlInfo.vue";
 export default {
   name: "AppUrlForm",
   emits: [],
+  components: {
+    AppModal,
+    AppUrlInfo,
+  },
   data() {
     return {
       originalUrl: "",
@@ -53,6 +64,8 @@ export default {
         if (response.ok) {
           this.isResponse = true;
           this.responseData = await response.json();
+          console.table(this.responseData);
+          this.$refs.modal.showModal();
         } else {
           throw new Error(
             `Ошибка fetch формирования токена для url: ${urlStr}`
@@ -65,7 +78,6 @@ export default {
     btnClickFunc() {
       const isValid = this.validateModel();
       if (isValid) {
-        console.log(this.originalUrl.trim());
         this.createToken(this.originalUrl.trim());
       } else {
         alert("Введенный URL не валиден!");

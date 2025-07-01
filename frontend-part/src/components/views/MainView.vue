@@ -3,7 +3,7 @@
     <AppHeader style="z-index: 100" />
     <AppUrlForm style="z-index: 0" />
     <hr />
-    <NearestCreatedTokens class="h-50" style="z-index: 0" />
+    <NearestCreatedTokens style="z-index: 0" />
   </AppWrap>
 </template>
 

@@ -20,3 +20,16 @@ body {
     color: #52796f;
 }
 
+.el-w-scroll::-webkit-scrollbar {
+    width: 0.25rem; /* ширина scrollbar */
+}
+
+.el-w-scroll::-webkit-scrollbar-track {
+    background: transparent; /* цвет дорожки */
+}
+
+.el-w-scroll::-webkit-scrollbar-thumb {
+    background-color: #52796f; /* цвет плашки */
+    border-radius:  15px; /* закругления плашки */
+    border: 3px solid transparent; /* padding вокруг плашки */
+}
