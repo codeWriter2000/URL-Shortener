@@ -12,8 +12,31 @@ body {
     background-attachment: fixed;
 }
 
+body.modal-open {
+  overflow: hidden; /* Запрет прокрутки */
+  pointer-events: none; /* Блокировка кликов по body */
+}
+
+body.modal-open #modal {
+  pointer-events: auto; /* Разрешить клики внутри модального окна */
+}
+
 #app {
     color: #2f3e46;
+}
+
+#app-modal-window {
+    background-color: #dad7cd;
+    z-index: 150;
+}
+#modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 145;
+    background-color: rgba(0, 0, 0, 0.5);
 }
 
 .target-txt {

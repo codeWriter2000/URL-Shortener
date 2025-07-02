@@ -1,5 +1,6 @@
 <template>
   <teleport to="#modal">
+    <div id="modal-overlay" v-if="isVisible"></div>
     <div
       id="app-modal-window"
       class="container position-fixed top-50 start-50 w-25 translate-middle rounded shadow p-2 my-3"
@@ -43,17 +44,15 @@ export default {
   methods: {
     showModal() {
       this.isVisible = true;
+      document.body.classList.add("modal-open");
     },
     closeModal() {
       this.isVisible = false;
+      document.body.classList.remove("modal-open");
       this.$emit("ModalClosed");
     },
   },
 };
 </script>
 
-<style>
-#app-modal-window {
-  background-color: #dad7cd;
-}
-</style>
+<style></style>
