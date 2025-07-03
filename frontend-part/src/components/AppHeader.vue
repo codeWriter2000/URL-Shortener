@@ -16,20 +16,45 @@
     </div>
   </nav>
   <div id="views-changer" class="collapse w-100 position-absolute start-0">
-    <div class="d-flex flex-column align-items-center p-3">
-      <span>здесь будут кнопки</span>
-      <span>здесь будут кнопки</span>
-      <span>здесь будут кнопки</span>
+    <div class="d-flex flex-column align-items-center shadow">
+      <span @click="goTo('/')">формирование короткого токена</span>
+      <span @click="goTo('/statistic')">
+        ресурсы на которых формируют токены
+      </span>
+      <span @click="goTo('/about')">о приложении URL Shortener</span>
     </div>
   </div>
 </template>
 
-<script></script>
+<script>
+export default {
+  name: "AppHeader",
+  methods: {
+    goTo(pathTo) {
+      this.$router.push({ path: pathTo });
+    },
+  },
+};
+</script>
 
 <style scoped>
 #views-changer {
   position: absolute;
   background-color: #84a98c;
+  color: #cad2c5;
+}
+#views-changer span {
+  width: 100%;
+  text-align: center;
+  text-transform: uppercase;
+  cursor: pointer;
+  padding-top: 0.45rem;
+  padding-bottom: 0.45rem;
+}
+#views-changer span:hover {
+  text-decoration: underline;
+  background-color: #588157;
+  font-weight: bold;
   color: #cad2c5;
 }
 </style>

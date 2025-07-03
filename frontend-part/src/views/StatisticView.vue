@@ -1,24 +1,20 @@
 <template>
   <AppWrap>
     <AppHeader style="z-index: 100" />
-    <AppUrlForm style="z-index: 0" />
-    <hr />
-    <NearestCreatedTokens style="z-index: 0" />
+    <OriginChart />
   </AppWrap>
 </template>
 
 <script>
 import AppWrap from "@/components/AppWrap.vue";
 import AppHeader from "@/components/AppHeader.vue";
-import AppUrlForm from "@/components/AppUrlForm.vue";
-import NearestCreatedTokens from "@/components/NearestCreatedTokens.vue";
+import OriginChart from "@/components/OriginChart.vue";
 export default {
-  name: "MainView",
+  name: "StatisticView",
   components: {
     AppWrap,
     AppHeader,
-    AppUrlForm,
-    NearestCreatedTokens,
+    OriginChart,
   },
 };
 </script>

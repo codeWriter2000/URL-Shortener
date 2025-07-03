@@ -44,7 +44,7 @@ body.modal-open #modal {
 }
 
 .el-w-scroll::-webkit-scrollbar {
-    width: 0.25rem; /* ширина scrollbar */
+    width: 0.15rem; /* ширина scrollbar */
 }
 
 .el-w-scroll::-webkit-scrollbar-track {
@@ -52,7 +52,7 @@ body.modal-open #modal {
 }
 
 .el-w-scroll::-webkit-scrollbar-thumb {
-    background-color: #52796f; /* цвет плашки */
+    background-color: #588157; /* цвет плашки */
     border-radius:  15px; /* закругления плашки */
     border: 3px solid transparent; /* padding вокруг плашки */
 }

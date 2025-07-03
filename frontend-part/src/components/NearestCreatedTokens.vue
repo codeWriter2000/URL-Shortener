@@ -23,8 +23,8 @@
       </div>
     </div>
   </div>
-  <div id="nearest-token-wrap" class="table-responsive h-50 el-w-scroll">
-    <table id="url-table" class="table text-center url-table">
+  <div id="nearest-token-wrap" class="table-responsive el-w-scroll">
+    <table id="url-table" class="table text-center url-table m-0">
       <thead class="sticky-top">
         <tr>
           <th class="col-1">#</th>
@@ -97,7 +97,7 @@ export default {
       let exStr;
       const maxLen = 50;
       if (variable.length >= maxLen) {
-        exStr = variable.substring(0, maxLen);
+        exStr = variable.substring(0, maxLen - 3) + "...";
       } else {
         exStr = variable;
       }
@@ -111,6 +111,9 @@ export default {
 </script>
 
 <style>
+#nearest-token-wrap {
+  height: 37vh;
+}
 .url-table {
   border-color: #52796f !important;
   border-style: solid;
