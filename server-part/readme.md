@@ -18,5 +18,4 @@
     $ pip install -r requirements.txt
     ```
 2. В [конфигурационном файле](config.py) указать HOST, PORT на которых предполагается запуск приложения для корректной работы формирования QR кодов.
-3. Запустить проект:
-`$ python -m flask run`.
+3. Запуск проекта с выбранными параметрами HOST и PORT: `$ python -m flask run -h HOST -p PORT`.
