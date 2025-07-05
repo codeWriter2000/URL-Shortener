@@ -4,9 +4,24 @@
       id="chart-block"
       class="row align-items-center justify-content-between"
     >
-      <canvas class="col-3" ref="chartCanvas"></canvas>
-      <div class="col">
-        здесь будет таблица с данными о ресурсах на которые формировали токены
+      <canvas style="width: 20vw; height: 20vw" ref="chartCanvas"></canvas>
+      <div
+        class="col-7 border-start"
+        style="height: 60vh; border-color: #52796f !important"
+      >
+        <p id="info-block-title" class="fw-bold fs-4" style="color: #588157">
+          Популярность ресурсов
+          <br />
+          {{ subTitle }}
+        </p>
+        <div class="overflow-auto el-w-scroll" style="max-height: 48vh">
+          <div v-for="(item, idx) in originData" :key="idx">
+            <span class="row w-100">
+              <strong class="col-6">{{ idx }}</strong>
+              <span class="col text-end">&mdash;&emsp;{{ item }}</span>
+            </span>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -21,21 +36,33 @@ export default {
     return {
       isData: false,
       chart: null,
+      subTitle: String,
       originData: Object,
       labels: Array,
       counts: Array,
     };
   },
   methods: {
+    // метод для отрисовки в зависимости от параметров маршрута
+    loadData(statType) {
+      if (statType === "token_generation") {
+        this.subTitle = "(по формированию токенов)";
+        this.getOriginsTokenCreate();
+      } else if (statType === "visiting_origins") {
+        this.subTitle = "(по посещению)";
+        this.getOriginsLogStatistic();
+      }
+    },
+
     // метод для сортировки
     sortData(obj) {
       const entries = Object.entries(obj); // объект в массив пар
-      entries.sort((a, b) => a[1] - b[1]); // Сортируем по значению
+      entries.sort((a, b) => b[1] - a[1]); // Сортируем по значению
       return Object.fromEntries(entries);
     },
 
-    // метод получения данных с API
-    async getOrigins() {
+    // метод получения данных с API (популярность по формированию токенов)
+    async getOriginsTokenCreate() {
       try {
         const response = await fetch(
           `http://${API}/api/distinct_origins_from_storage`,
@@ -61,6 +88,33 @@ export default {
       }
     },
 
+    // метод получения данных с API (популярность по посещению)
+    async getOriginsLogStatistic() {
+      try {
+        const response = await fetch(
+          `http://${API}/api/origin_statistic_by_logs`,
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json;",
+            },
+          }
+        );
+        if (response.ok) {
+          const data = await response.json();
+          this.originData = this.sortData(data);
+          this.isData = true;
+          this.drawChart();
+        } else {
+          throw new Error(
+            "Ошибка fetch получения статистики посещения ресурсов"
+          );
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    },
+
     // метод отрисовки графика
     drawChart() {
       if (this.chart) {
@@ -79,7 +133,6 @@ export default {
         },
         options: {
           responsive: false,
-          maintainAspectRatio: false,
           plugins: {
             legend: {
               display: false,
@@ -90,10 +143,12 @@ export default {
     },
   },
   created() {
-    this.getOrigins();
+    this.loadData(this.$route.params.statType);
   },
-  mounted() {
-    this.drawChart();
+  watch: {
+    "$route.params.statType"(newVal) {
+      this.loadData(newVal);
+    },
   },
   beforeUnmount() {
     if (this.chart) {

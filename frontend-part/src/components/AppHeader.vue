@@ -18,8 +18,11 @@
   <div id="views-changer" class="collapse w-100 position-absolute start-0">
     <div class="d-flex flex-column align-items-center shadow">
       <span @click="goTo('/')">формирование короткого токена</span>
-      <span @click="goTo('/statistic')">
-        ресурсы на которых формируют токены
+      <span @click="goTo('/statistic/token_generation')">
+        популярность ресурсов по формированию токенов
+      </span>
+      <span @click="goTo('/statistic/visiting_origins')">
+        популярность ресурсов по посещению
       </span>
       <span @click="goTo('/about')">о приложении URL Shortener</span>
     </div>

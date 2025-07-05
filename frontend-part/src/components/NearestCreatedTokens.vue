@@ -32,7 +32,7 @@
           <th class="col-3">Время создания</th>
         </tr>
       </thead>
-      <tbody v-if="isNearest && nearest.length" class="overflow-y">
+      <tbody v-if="isNearest && nearest.length" class="overflow-auto">
         <tr v-for="(item, idx) in nearest" :key="idx">
           <td>{{ idx + 1 }}</td>
           <td>{{ shortUrl(item.original_url) }}</td>

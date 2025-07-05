@@ -6,7 +6,7 @@ const routes = [
     component: () => import("@/views/MainView.vue"),
   },
   {
-    path: "/statistic",
+    path: "/statistic/:statType",
     component: () => import("@/views/StatisticView.vue"),
   },
   {
