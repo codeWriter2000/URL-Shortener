@@ -1,0 +1,58 @@
+html, body {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background:
+        linear-gradient(217deg, #dad7cd, rgba(255, 0, 0, 0) 70.71%),
+        linear-gradient(127deg, #a3b18a, rgba(0, 255, 0, 0) 70.71%),
+        linear-gradient(336deg, #588157, rgba(0, 0, 255, 0) 70.71%);
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
+body.modal-open {
+  overflow: hidden; /* Запрет прокрутки */
+  pointer-events: none; /* Блокировка кликов по body */
+}
+
+body.modal-open #modal {
+  pointer-events: auto; /* Разрешить клики внутри модального окна */
+}
+
+#app {
+    color: #2f3e46;
+}
+
+#app-modal-window {
+    background-color: #dad7cd;
+    z-index: 150;
+}
+#modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 145;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.target-txt {
+    color: #52796f;
+}
+
+.el-w-scroll::-webkit-scrollbar {
+    width: 0.15rem; /* ширина scrollbar */
+}
+
+.el-w-scroll::-webkit-scrollbar-track {
+    background: transparent; /* цвет дорожки */
+}
+
+.el-w-scroll::-webkit-scrollbar-thumb {
+    background-color: #588157; /* цвет плашки */
+    border-radius:  15px; /* закругления плашки */
+    border: 3px solid transparent; /* padding вокруг плашки */
+}
