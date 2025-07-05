@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, abort, request, redirect, make_response
+from flask import Flask, jsonify, abort, request, redirect
 from flask_cors import CORS
 import json
 
@@ -6,10 +6,16 @@ import url
 from url import URL
 from utils import get_qr_bs64
 
+from config import HOST, PORT
+
 
 app = Flask(__name__)
 CORS(app)
 
+host = HOST
+port = PORT
+
+url_template = "http://{}:{}/{}"
 
 @app.route('/ping')
 def ping_pong():
@@ -36,7 +42,11 @@ def create_short_url():
     }
 
     url_obj = URL.generate_new(req['original_url'])
-    qr_b64 = get_qr_bs64(url_obj.short_token)
+    qr_b64 = get_qr_bs64(url_template.format(
+        host,
+        port,
+        url_obj.short_token
+    ))
 
     data_2_res = url_obj.url_2_dict()
     data_2_res['qrcode'] = qr_b64
